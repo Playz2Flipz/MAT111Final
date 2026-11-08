@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#287D50">
+<title>SnapGreen</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Prompt:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=5">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="leaf" viewBox="0 0 24 24"><path d="M4 20C4 9 11 4 21 3c0 10-5 17-15 17z" fill="currentColor"/></symbol>
+  <symbol id="mascot" viewBox="0 0 100 100">
+    <path d="M50 28C46 12 33 9 28 14c2 11 11 15 22 14z" fill="#4CAF6A"/>
+    <path d="M50 28c4-16 17-19 22-14-2 11-11 15-22 14z" fill="#287D50"/>
+    <ellipse cx="46" cy="55" rx="30" ry="27" fill="#FFF6DC" stroke="#E9DDB5" stroke-width="1.5"/>
+    <circle cx="36" cy="50" r="3.2" fill="#183D2C"/><circle cx="54" cy="50" r="3.2" fill="#183D2C"/>
+    <circle cx="30" cy="58" r="4" fill="#FFB6A8" opacity=".7"/><circle cx="60" cy="58" r="4" fill="#FFB6A8" opacity=".7"/>
+    <path d="M40 58q5 5 10 0" stroke="#183D2C" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <circle cx="68" cy="76" r="19" fill="#4AA3DF"/>
+    <path d="M56 70q6-9 14-6 4 6-2 10-8 2-12-4zM70 80q8-2 10 4-3 7-10 6z" fill="#5BBF72"/>
+    <ellipse cx="50" cy="80" rx="7" ry="5" fill="#FFF6DC" stroke="#E9DDB5"/><ellipse cx="86" cy="72" rx="6" ry="5" fill="#FFF6DC" stroke="#E9DDB5"/>
+  </symbol>
+</svg>
+
+<div class="app">
+  <header class="top">
+    <div class="brand"><svg class="lg"><use href="#leaf"/></svg><b>SnapGreen</b></div>
+    <div class="acts">
+      <button class="ib" data-go="history" aria-label="History">🕘</button>
+      <button class="ib" data-go="profile" aria-label="Profile">👤</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- HOME -->
+    <section class="screen active" id="home">
+      <div class="hero">
+        <div><h1 data-i18n="slogan"></h1><p data-i18n="hi"></p></div>
+        <svg class="mascot"><use href="#mascot"/></svg>
+      </div>
+      <button class="card eco" data-go="rewards">
+        <span class="leafbox"><svg class="lg"><use href="#leaf"/></svg></span>
+        <span class="grow"><small data-i18n="ecoScore"></small><b id="ecoNum">0</b>
+          <span class="bar"><i id="ecoBar"></i></span><small id="ecoSum"></small></span>
+      </button>
+      <h2 data-i18n="explore"></h2>
+      <div class="feats">
+        <button class="feat g" data-go="analyzer"><span>📷</span><b data-i18n="fAnalyze"></b><small data-i18n="fAnalyzeD"></small></button>
+        <button class="feat b" data-go="chat"><span>💬</span><b data-i18n="fChat"></b><small data-i18n="fChatD"></small></button>
+        <button class="feat o" data-go="game"><span>🎮</span><b data-i18n="fGame"></b><small data-i18n="fGameD"></small></button>
+      </div>
+      <div class="card tip"><span class="big">💡</span><div><b data-i18n="tipsT"></b><p id="tipTxt"></p></div></div>
+      <div class="row"><h2 data-i18n="recent"></h2><button class="link" data-go="history" data-i18n="viewAll"></button></div>
+      <div id="recent" class="list"></div>
+    </section>
+
+    <!-- ANALYZER -->
+    <section class="screen" id="analyzer">
+      <div class="sub"><button class="ib" data-go="home">‹</button><b data-i18n="tAnalyzer"></b><button class="ib" id="infoBtn">ⓘ</button></div>
+      <div class="demo" data-i18n="demoA" id="demoA"></div>
+      <div class="preview" id="preview"><div class="ph"><span>♻️</span><p data-i18n="pickHint"></p></div><img id="prevImg" alt=""></div>
+      <input type="file" id="cam" accept="image/*" capture="environment" hidden>
+      <input type="file" id="gal" accept="image/*" hidden>
+      <div class="card btns" id="pickBtns">
+        <button class="btn pri" id="camBtn">📸 <span data-i18n="takePhoto"></span></button>
+        <button class="btn sec" id="galBtn">🖼️ <span data-i18n="gallery"></span></button>
+      </div>
+      <div class="card txtcard"><label for="txtIn" data-i18n="txtLbl"></label><textarea id="txtIn" rows="2" data-i18n-ph="txtPh"></textarea></div>
+      <button class="btn pri wide" id="anaBtn" hidden data-i18n="analyze"></button>
+      <div class="loading" id="anaLoad" hidden><i></i><p data-i18n="analyzing"></p></div>
+      <div class="res" id="result" hidden></div>
+      <div class="card how" id="how"><span class="big">💡</span><div><b data-i18n="how"></b><p data-i18n="howD"></p></div></div>
+    </section>
+
+    <!-- CHAT -->
+    <section class="screen" id="chat">
+      <div class="sub"><button class="ib" data-go="home">‹</button>
+        <span class="chead"><svg class="mini"><use href="#mascot"/></svg><span><b data-i18n="tChat"></b><small class="on" data-i18n="online"></small></span></span>
+        <button class="ib" id="newChat" aria-label="New">✚</button></div>
+      <div class="demo" data-i18n="demoC" id="demoC"></div>
+      <div class="msgs" id="msgs"></div>
+      <div class="chips">
+        <button data-i18n="s1"></button><button data-i18n="s2"></button><button data-i18n="s3"></button><button data-i18n="s4"></button><button data-i18n="s5"></button>
+      </div>
+      <div class="inp"><input id="chatIn" data-i18n-ph="ph" autocomplete="off"><button id="send" class="send" aria-label="Send">➤</button></div>
+    </section>
+
+    <!-- GAME -->
+    <section class="screen" id="game">
+      <div class="sub"><button class="ib" data-go="home">‹</button><b data-i18n="tGame"></b><button class="ib" id="snd">🔊</button></div>
+      <div id="lobby" class="lobby">
+        <div class="gh"><svg class="mascot"><use href="#mascot"/></svg><div><h1 data-i18n="gTitle"></h1><p data-i18n="gTag"></p></div></div>
+        <div class="card how3"><b>💡 <span data-i18n="hpT"></span></b>
+          <div class="steps"><div><i>👆</i><small data-i18n="hp1"></small></div><u>›</u><div><i>🗑️</i><small data-i18n="hp2"></small></div><u>›</u><div><i>⭐</i><small data-i18n="hp3"></small></div></div></div>
+        <div class="card hs"><span class="big">🏆</span><div><small data-i18n="best"></small><b id="bestNum">0</b></div></div>
+        <h2 data-i18n="lvT"></h2><div class="levels" id="levels"></div>
+        <button class="btn pri wide startbig" id="startBtn">▶ <span></span></button>
+      </div>
+      <div id="play" hidden>
+        <div class="stats">
+          <div><i>⭐</i><span><small data-i18n="scoreL"></small><b id="gScore">0</b></span></div>
+          <div><i>⏱️</i><span><small id="gTimeL"></small><b id="gTime">00:30</b></span></div>
+          <div><i>📊</i><span><small data-i18n="level"></small><b id="gLvl">1</b></span></div>
+        </div>
+        <div class="pillrow"><button class="ib2" id="pauseBtn" aria-label="Pause">⏸</button><div class="pill">🌿 <span data-i18n="instr"></span> 🌿</div><button class="ib2" id="quitBtn" aria-label="Exit">✕</button></div>
+        <div class="scene" id="scene">
+          <div class="item" id="item"></div>
+          <div class="fb" id="fb"></div>
+          <div class="pausebox" id="pauseBox" hidden><div class="pb"><h3 id="pbT"></h3><button class="btn pri" id="resumeBtn" data-i18n="resume"></button><button class="btn sec" id="exitBtn" data-i18n="leave"></button></div></div>
+          <div class="bins">
+            <button class="bin" data-bin="general" style="--c:#2f80e0"><b>♻︎</b><span data-i18n="b_general"></span></button>
+            <button class="bin" data-bin="recycle" style="--c:#f0b11c"><b>♻︎</b><span data-i18n="b_recycle"></span></button>
+            <button class="bin" data-bin="wet" style="--c:#2fa05e"><b>♻︎</b><span data-i18n="b_wet"></span></button>
+            <button class="bin" data-bin="hazard" style="--c:#e0483f"><b>♻︎</b><span data-i18n="b_hazard"></span></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REWARDS -->
+    <section class="screen" id="rewards">
+      <div class="sub"><button class="ib" data-go="home">‹</button><b data-i18n="tRewards"></b><span class="ib"></span></div>
+      <div class="card feat-ach" id="featAch"></div>
+      <div class="filters" id="filters">
+        <button class="on" data-f="all" data-i18n="fAll"></button><button data-f="learn" data-i18n="fLearn"></button>
+        <button data-f="game" data-i18n="fGameF"></button><button data-f="eco" data-i18n="fEco"></button>
+      </div>
+      <div class="grid" id="achGrid"></div>
+    </section>
+
+    <!-- HISTORY -->
+    <section class="screen" id="history">
+      <div class="sub"><button class="ib" data-go="home">‹</button><b data-i18n="tHistory"></b><span class="ib"></span></div>
+      <div id="histList" class="list"></div>
+    </section>
+
+    <!-- PROFILE -->
+    <section class="screen" id="profile">
+      <div class="sub"><button class="ib" data-go="home">‹</button><b data-i18n="tProfile"></b><span class="ib"></span></div>
+      <div class="card prof"><div class="avatar">🧑‍🌾</div><b data-i18n="pName"></b><small data-i18n="pSub"></small></div>
+      <div class="pstats" id="pStats"></div>
+      <h2 data-i18n="settings"></h2>
+      <div class="card"><small data-i18n="lang"></small>
+        <div class="langs"><button data-lang="th">ไทย</button><button data-lang="en">English</button></div></div>
+      <button class="btn sec wide" id="resetBtn" data-i18n="reset"></button>
+    </section>
+  </main>
+
+  <nav class="tabs">
+    <button data-go="home" class="on"><i>🏠</i><span data-i18n="nHome"></span></button>
+    <button data-go="analyzer"><i>📷</i><span data-i18n="nAna"></span></button>
+    <button data-go="chat"><i>💬</i><span data-i18n="nChat"></span></button>
+    <button data-go="game"><i>🎮</i><span data-i18n="nGame"></span></button>
+    <button data-go="rewards"><i>🏆</i><span data-i18n="nRew"></span></button>
+  </nav>
+  <div id="toast"></div>
+  <div id="modal" hidden></div>
+</div>
+<script>/* Optional: window.SNAPGREEN_CONFIG = {analyzeUrl:"https://your-api/analyze", chatUrl:"https://your-api/chat"}; */</script>
+<script src="script.js?v=5"></script>
+</body>
+</html>
